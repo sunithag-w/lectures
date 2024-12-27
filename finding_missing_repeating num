@@ -1,0 +1,117 @@
+import java.util.*;
+public class Main{
+public static void main(String[] args){------>o(n^2) so optimize
+    int[] arr={1,2,3,2};
+    int mis=-1;
+    int rep=-1;
+    for(int i=1;i<=arr.length;i++){ 
+       int c=0;
+       for(int j=0;j<arr.length;j++){
+           if(i==arr[j]){
+               c+=1;
+           }
+       }
+       if(c==2){
+           rep=i;
+       }if(c==0){
+         mis=i;
+       }
+       if(rep!=-1&&mis!=-1){
+           break;
+       }
+}
+System.out.println(mis+" "+rep);
+}
+}----------->
+----------------->
+public class Main{
+public static void main(String[] args){------->better 0(2n) and s.c=0(n)
+    int[] arr={1,2,3,2};
+    int rep=-1;
+    int mis=-1;
+   int n=arr.length;
+   int[] hash=new int[n+1];
+   for(int i=1;i<n;i++){
+       hash[arr[i]]+=1;
+   }
+   for(int i=0;i<hash.length;i++){
+       if(hash[i]==2){
+           rep=i;
+       }if(hash[i]==0){
+           mis=i;
+       }
+   }
+   System.out.println(mis+" "+rep);
+}
+}
+  ------------->1st optimal
+  public class Main{
+public static void main(String[] args){ ------>0(n)  s.c=0(n)----
+    int[] arr={4,3,6,2,1,1};
+    int rep=-1;
+    int mis=-1; int sum=0;int SON=0;int sumS=0;int S2n=0;
+    int n=arr.length;
+    SON=(n*(n+1))/2;
+    S2n=(n*(n+1)*(2*n+1))/6;
+   for(int i=0;i<n;i++){
+        sum+=arr[i];
+         sumS+=Math.pow(arr[i],2);
+   }
+   int val=sum-SON;
+ int val2=sumS-S2n;
+ val2=(val2/val);
+ int x=(val+val2)/2;
+ int y=val2-x;
+ System.out.print(x+" "+y);
+}
+}
+-------------------------->2nd optimal
+public class Main{
+public static void main(String[] args){------->0(4n) s.c 0(1)
+    int[] arr={4,3,6,2,1,1};
+    int n=arr.length;
+    int xor=0;
+    for(int i=0;i<n;i++){
+        xor^=arr[i];
+        xor^=(i+1);
+    }
+    int bit=xor&~(xor-1);
+    //  int bit=0;
+    //  while(true){
+    //      if((xor & (1<<bit))!=0){
+    //          break;
+    //      }
+    //      bit++;
+    //  }
+     int one=0;
+     int zero=0;
+     for(int i=0;i<n;i++){
+         if((arr[i]&(bit))!=0){
+             one=one^arr[i];
+         }else{
+             zero^=arr[i];
+         }
+     }
+      for(int i=1;i<=n;i++){
+         if((i&(bit))!=0){
+             one=one^i;
+         }else{
+             zero^=i;
+         }
+     }
+     int c=0;
+     for(int i=0;i<n;i++){
+         if(arr[i]==zero){
+             c++;
+         }
+     }
+     if(c==2){
+         System.out.print(zero+" "+one);
+     }else{
+         System.out.print(one+" "+zero);
+     }
+     
+}
+}
+  
+  
