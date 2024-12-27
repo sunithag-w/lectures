@@ -1,0 +1,120 @@
+import java.util.*;
+class Main{
+    public static void main(String[] args){=========>0(n^3)
+       int[][] arr={{2,4,3},{1,0,0}};
+       int n=arr.length;
+       for(int i=0;i<n;i++){
+           for(int j=0;j<arr[i].length;j++){
+              if(arr[i][j]==0){
+                 setrow(arr,i,j);
+              } 
+           }
+       }
+       for(int i=0;i<n;i++){
+           for(int j=0;j<arr[i].length;j++){
+               if(arr[i][j]==-1){
+                   arr[i][j]=0;
+               }
+           }
+       }
+       for(int i=0;i<n;i++){
+           for(int j=0;j<arr[i].length;j++){
+               System.out.print(arr[i][j]+" ");
+           }
+           System.out.println();
+       }
+    }
+       public static void setrow(int[][] arr,int r,int c){
+           for(int j=0;j<arr.length;j++){
+               if(arr[r][j]!=0){
+               arr[r][j]=-1;
+               }
+           }
+           for(int i=0;i<arr.length;i++){
+               if(arr[i][c]!=0){
+               arr[i][c]=-1;
+               }
+           }
+       } 
+}==================================
+====================================>instead of updating at current through iteration ....keep an track where we need to place an zero than atlast plae all zero
+class Main{
+    public static void main(String[] args){==============>t.c=0(2(n*m))====s.c=0(n)+0(m)
+      ArrayList<ArrayList<Integer>> g=new ArrayList<>();
+      g.add(new ArrayList<>(Arrays.asList(1,1,1,1)));
+       g.add(new ArrayList<>(Arrays.asList(1,0,0,1)));
+        g.add(new ArrayList<>(Arrays.asList(1,1,0,1)));
+         g.add(new ArrayList<>(Arrays.asList(1,1,1,1)));
+         int n=g.size();
+         int m=g.get(0).size();
+        int[] row=new int[n];
+        int[] col=new int[m];
+         for(int i=0;i<n;i++){
+             for(int j=0;j<g.get(i).size();j++){
+                 if(g.get(i).get(j)==0){
+                    row[i]=1;
+                    col[j]=1;
+                 }
+             }
+         }
+         for(int i=0;i<n;i++){
+             for(int j=0;j<m;j++){
+                 if(row[i]==1||col[j]==1){
+                     g.get(i).set(j,0);
+                 }
+             }
+         }
+       for(ArrayList<Integer> r:g){
+           System.out.println(r);
+       }
+    }
+}========================================
+===============================================.optimise the space complexity instead of taking an extra two array outside ....modify keep track it inside the array by keeping inside track
+import java.util.*;
+class Main{
+    public static void main(String[] args){=============>t.c=0(2(n*m))=====s.c=0(1)
+      ArrayList<ArrayList<Integer>> g=new ArrayList<>();
+      g.add(new ArrayList<>(Arrays.asList(1,1,1,1)));
+       g.add(new ArrayList<>(Arrays.asList(1,0,0,1)));
+        g.add(new ArrayList<>(Arrays.asList(1,1,0,1)));
+         g.add(new ArrayList<>(Arrays.asList(1,1,1,1)));
+         int n=g.size();
+         int m=g.get(0).size();
+         int col=1;
+         for(int i=0;i<n;i++){
+             for(int j=0;j<m;j++){
+                 if(g.get(i).get(j)==0){
+                 g.get(i).set(0,0);////==row
+                 if(j!=0){
+                  g.get(0).set(j,0);//===col
+                 }else{
+                     col=0;
+                 }
+             }
+             }
+         }
+         for(int i=1;i<n;i++){
+             for(int j=1;j<m;j++){
+                 if(g.get(i).get(j)!=0){
+                     if(g.get(i).get(0)==0||g.get(0).get(j)==0){
+                         g.get(i).set(j,0);
+                     }
+                 }
+             }
+         }
+         if(g.get(0).get(0)==0){
+             for(int j=0;j<n;j++){
+                 g.get(0).set(j,0);
+             }
+         }
+             if(col==0){
+                 for(int i=0;i<n;i++){
+                     g.get(i).set(0,0);
+                 }
+             
+         }
+         for(ArrayList<Integer> a:g){
+             System.out.println(a);
+         }
+    }
+}
