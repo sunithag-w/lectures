@@ -1,0 +1,80 @@
+class Main{
+    public static void main(String[] args){------------------>nlogn+0(2n) ---->s.c 0(n)
+        Scanner sc=new Scanner(System.in);
+        ArrayList<ArrayList<Integer>> g=new ArrayList<>();
+      
+        for(int i=0;i<4;i++){
+            ArrayList<Integer> ar=new ArrayList<>();
+            System.out.println("enter");
+            for(int j=0;j<2;j++){
+                ar.add(sc.nextInt());
+            }
+            g.add(ar);
+        }
+    //   // System.out.println(Arrays.deepToString(g));
+    //   for(ArrayList<Integer> row:g){
+    //       System.out.println(row);
+    //   }
+    Collections.sort(g, (a,b) -> Integer.compare(a.get(0),b.get(0)));
+    // for(ArrayList<Integer> row:g){
+    //       System.out.println(row);
+    //   }
+    ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+      int n=g.size();
+    for(int i=0;i<n;i++){
+        int start=g.get(i).get(0);
+        int end=g.get(i).get(1);
+        if(!ans.isEmpty()&&end<=ans.get(ans.size()-1).get(1)){
+            continue;
+        }
+        for(int j=i+1;j<n;j++){
+            if(g.get(j).get(0)<=end){
+                end=Math.max(end,g.get(j).get(1));
+            }else{
+                break;
+            }
+        }
+        ans.add(new ArrayList<>(Arrays.asList(start, end)));
+    }
+    for(ArrayList<Integer> row:ans){
+       System.out.println(row);
+     }
+    }
+}---------------------------------------------------------------------------------->
+-------------------------------->optimal approach is
+class Main{
+    public static void main(String[] args){=================>t.c=nlogn+o(n)=====s.c=o(n)
+        Scanner sc=new Scanner(System.in);
+        ArrayList<ArrayList<Integer>> g=new ArrayList<>();
+      
+        for(int i=0;i<4;i++){
+            ArrayList<Integer> ar=new ArrayList<>();
+            System.out.println("enter");
+            for(int j=0;j<2;j++){
+                ar.add(sc.nextInt());
+            }
+            g.add(ar);
+        }
+    //   // System.out.println(Arrays.deepToString(g));
+    //   for(ArrayList<Integer> row:g){
+    //       System.out.println(row);
+    //   }
+    Collections.sort(g, (a,b) -> Integer.compare(a.get(0),b.get(0)));
+    // for(ArrayList<Integer> row:g){
+    //       System.out.println(row);
+    //   }
+    ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+      int n=g.size();
+    for(int i=0;i<n;i++){
+        if(ans.isEmpty()||g.get(i).get(0)>ans.get(ans.size()-1).get(1)){
+            ans.add(new ArrayList<>(Arrays.asList(g.get(i).get(0),g.get(i).get(1))));
+        }
+        else{
+            ans.get(ans.size() - 1).set(1, Math.max(ans.get(ans.size() - 1).get(1), g.get(i).get(1)));
+        }
+    }
+    for(ArrayList<Integer> row:ans){
+       System.out.println(row);
+     }
+    }
+}
