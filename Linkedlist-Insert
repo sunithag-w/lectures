@@ -1,0 +1,73 @@
+public class Linked {
+	 Node head;
+    class Node{
+    	int data;
+    	Node next;
+    	public Node(int data) {
+    		this.data=data;
+    		this.next=null;
+    	}
+    	public Node(int data,Node next) {
+    		this.data=data;
+    		this.next=next;
+    	}
+    }
+    int size=0;
+    public  void insert(int val) {
+    	Node node=new Node(val);
+    	node.next=head;
+    	head=node;
+    	size++;
+    	
+    }
+    public void middle(int val,int ind) {
+    	if(ind==0) {
+    		insert(val);
+    		return;
+    	}
+    	Node temp=head;
+    	for(int i=0;i<ind-1;i++) {
+    		temp=temp.next;
+    	}
+    	Node node=new Node( val,temp.next);
+    	temp.next=node;
+    	size++;
+    }
+    public void lastIn(int val) {
+    	if(head==null) {
+    		insert(val);
+    		return;
+    	}
+    	Node temp=head;
+    	while(temp.next!=null) {
+    		temp=temp.next;
+    	}
+    	Node node=new Node(val);
+    	temp.next=node;
+    	size++;
+    }
+    public void display() {
+    	Node temp=head;
+    	while(temp!=null) {
+    		System.out.print(temp.data+" ");
+    		temp=temp.next;
+    	}
+    	System.out.println("END");
+    }
+    public static void main(String[] ags) {
+    	Linked l=new Linked();
+    	l.insert(1);
+    	l.insert(2);
+    	l.insert(3);
+    	l.insert(4);
+    	l.insert(5);
+    	l.middle(6,0);
+    	l.lastIn(7);
+    	l.display();
+    	System.out.println(l.size);
+    	
+    }
+}
+=============================>
+6 5 4 3 2 1 7 END
+7=size;
